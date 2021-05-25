@@ -1,29 +1,19 @@
-**********UC-2 Inserting attributes in address book table**********
+**********UC-3 Inserting contacts in address book table **********
 
-mysql> create table Address_Book_Table
-    -> (
-    -> FirstName varchar(150) not null,
-    -> LastName varchar(150) not null,
-    -> Address varchar(150) not null,
-    -> City varchar(100) not null,
-    -> State varchar(150) not null,
-    -> Zip int not null,
-    -> PhoneNo int not null,
-    -> Email varchar(100) not null
-    -> );
-Query OK, 0 rows affected (0.06 sec)
+mysql> insert into Address_Book_Table (FirstName, LastName, Address, City, State, Zip, PhoneNo, Email) values
+    -> ( 'Renuka', 'Sawale', 'Pimpri', 'Pune', 'Maharastra', 1234, 9123, 'ren11@gmail.com' ),
+    -> ( 'Reetu', 'Roy', 'Chinchawad', 'Delhi', 'Kerala', 5678, 9112, 'reetu14@gmail.com' ),
+    -> ( 'Soniya', 'Sharma', 'Marunji', 'Mumbai', 'KMaharastra', 1490, 8121, 'soniya12@gmail.com' ),
+    -> ( 'Teena', 'Singh', 'Seawood', 'Margao', 'Goa', 2334, 9284, 'rsa2438@gmail.com' );
+Query OK, 4 rows affected (0.01 sec)
 
-mysql> describe Address_Book_Table;
-+-----------+--------------+------+-----+---------+-------+
-| Field     | Type         | Null | Key | Default | Extra |
-+-----------+--------------+------+-----+---------+-------+
-| FirstName | varchar(150) | NO   |     | NULL    |       |
-| LastName  | varchar(150) | NO   |     | NULL    |       |
-| Address   | varchar(150) | NO   |     | NULL    |       |
-| City      | varchar(100) | NO   |     | NULL    |       |
-| State     | varchar(150) | NO   |     | NULL    |       |
-| Zip       | int          | NO   |     | NULL    |       |
-| PhoneNo   | int          | NO   |     | NULL    |       |
-| Email     | varchar(100) | NO   |     | NULL    |       |
-+-----------+--------------+------+-----+---------+-------+
-8 rows in set (0.01 sec)
+mysql> select * from Address_Book_Table;
++-----------+----------+------------+--------+-------------+------+---------+--------------------+
+| FirstName | LastName | Address    | City   | State       | Zip  | PhoneNo | Email              |
++-----------+----------+------------+--------+-------------+------+---------+--------------------+
+| Renuka    | Sawale   | Pimpri     | Pune   | Maharastra  | 1234 |    9123 | ren11@gmail.com    |
+| Reetu     | Roy      | Chinchawad | Delhi  | Kerala      | 5678 |    9112 | reetu14@gmail.com  |
+| Soniya    | Sharma   | Marunji    | Mumbai | KMaharastra | 1490 |    8121 | soniya12@gmail.com |
+| Teena     | Singh    | Seawood    | Margao | Goa         | 2334 |    9284 | rsa2438@gmail.com  |
++-----------+----------+------------+--------+-------------+------+---------+--------------------+
+4 rows in set (0.00 sec)
