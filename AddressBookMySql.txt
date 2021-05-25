@@ -1,0 +1,14 @@
+**********Uc-1 Create Address Book Database ***********
+
+mysql> create database Address_Book_Service;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> use Address_Book_Service;
+Database changed
+mysql> select database();
++----------------------+
+| database()           |
++----------------------+
+| address_book_service |
++----------------------+
+1 row in set (0.00 sec)
