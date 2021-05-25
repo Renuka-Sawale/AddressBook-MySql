@@ -1,4 +1,4 @@
-**********Uc-1 Create Address Book Database ***********
+**********UC-1 Create Address Book Database ***********
 
 mysql> create database Address_Book_Service;
 Query OK, 1 row affected (0.01 sec)
