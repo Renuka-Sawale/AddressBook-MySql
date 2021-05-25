@@ -1,3 +1,68 @@
+**********Uc-1 Create Address Book Database ***********
+
+mysql> create database Address_Book_Service;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> use Address_Book_Service;
+Database changed
+mysql> select database();
++----------------------+
+| database()           |
++----------------------+
+| address_book_service |
++----------------------+
+1 row in set (0.00 sec)
+
+**********UC-2 Inserting attributes in address book table**********
+
+mysql> create table Address_Book_Table
+    -> (
+    -> FirstName varchar(150) not null,
+    -> LastName varchar(150) not null,
+    -> Address varchar(150) not null,
+    -> City varchar(100) not null,
+    -> State varchar(150) not null,
+    -> Zip int not null,
+    -> PhoneNo int not null,
+    -> Email varchar(100) not null
+    -> );
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> describe Address_Book_Table;
++-----------+--------------+------+-----+---------+-------+
+| Field     | Type         | Null | Key | Default | Extra |
++-----------+--------------+------+-----+---------+-------+
+| FirstName | varchar(150) | NO   |     | NULL    |       |
+| LastName  | varchar(150) | NO   |     | NULL    |       |
+| Address   | varchar(150) | NO   |     | NULL    |       |
+| City      | varchar(100) | NO   |     | NULL    |       |
+| State     | varchar(150) | NO   |     | NULL    |       |
+| Zip       | int          | NO   |     | NULL    |       |
+| PhoneNo   | int          | NO   |     | NULL    |       |
+| Email     | varchar(100) | NO   |     | NULL    |       |
++-----------+--------------+------+-----+---------+-------+
+8 rows in set (0.01 sec)
+
+**********UC-3 Inserting contacts in address book table **********
+
+mysql> insert into Address_Book_Table (FirstName, LastName, Address, City, State, Zip, PhoneNo, Email) values
+    -> ( 'Renuka', 'Sawale', 'Pimpri', 'Pune', 'Maharastra', 1234, 9123, 'ren11@gmail.com' ),
+    -> ( 'Reetu', 'Roy', 'Chinchawad', 'Delhi', 'Kerala', 5678, 9112, 'reetu14@gmail.com' ),
+    -> ( 'Soniya', 'Sharma', 'Marunji', 'Mumbai', 'KMaharastra', 1490, 8121, 'soniya12@gmail.com' ),
+    -> ( 'Teena', 'Singh', 'Seawood', 'Margao', 'Goa', 2334, 9284, 'rsa2438@gmail.com' );
+Query OK, 4 rows affected (0.01 sec)
+
+mysql> select * from Address_Book_Table;
++-----------+----------+------------+--------+-------------+------+---------+--------------------+
+| FirstName | LastName | Address    | City   | State       | Zip  | PhoneNo | Email              |
++-----------+----------+------------+--------+-------------+------+---------+--------------------+
+| Renuka    | Sawale   | Pimpri     | Pune   | Maharastra  | 1234 |    9123 | ren11@gmail.com    |
+| Reetu     | Roy      | Chinchawad | Delhi  | Kerala      | 5678 |    9112 | reetu14@gmail.com  |
+| Soniya    | Sharma   | Marunji    | Mumbai | KMaharastra | 1490 |    8121 | soniya12@gmail.com |
+| Teena     | Singh    | Seawood    | Margao | Goa         | 2334 |    9284 | rsa2438@gmail.com  |
++-----------+----------+------------+--------+-------------+------+---------+--------------------+
+4 rows in set (0.00 sec)
+
 **********UC-4 Edit Existing contacts by using FirstName**********
 
 mysql> update Address_Book_Table
@@ -16,3 +81,194 @@ mysql> select * from Address_Book_Table;
 | Teena     | Singh      | Seawood    | Margao    | Goa         | 2334 |    9284 | rsa2438@gmail.com  |
 +-----------+------------+------------+-----------+-------------+------+---------+--------------------+
 4 rows in set (0.00 sec)
+
+
+**********UC-5 Delete Contact By Using FirstName**********
+
+mysql> delete from Address_Book_Table where FirstName = 'Reetu';
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from Address_Book_Table;
++-----------+------------+---------+-----------+-------------+------+---------+--------------------+
+| FirstName | LastName   | Address | City      | State       | Zip  | PhoneNo | Email              |
++-----------+------------+---------+-----------+-------------+------+---------+--------------------+
+| Renuka    | Singhaniya | Hsr     | Bangalore | Karnataka   | 1290 |    3225 | rima15@gmail.com   |
+| Soniya    | Sharma     | Marunji | Mumbai    | KMaharastra | 1490 |    8121 | soniya12@gmail.com |
+| Teena     | Singh      | Seawood | Margao    | Goa         | 2334 |    9284 | rsa2438@gmail.com  |
++-----------+------------+---------+-----------+-------------+------+---------+--------------------+
+3 rows in set (0.00 sec)
+
+**********UC-6 Retrieve Person Belonging to a City ot State**********
+
+mysql> select * from Address_Book_Table;
++-----------+------------+---------+-----------+-------------+------+---------+--------------------+
+| FirstName | LastName   | Address | City      | State       | Zip  | PhoneNo | Email              |
++-----------+------------+---------+-----------+-------------+------+---------+--------------------+
+| Renuka    | Singhaniya | Hsr     | Bangalore | Karnataka   | 1290 |    3225 | rima15@gmail.com   |
+| Soniya    | Sharma     | Marunji | Mumbai    | KMaharastra | 1490 |    8121 | soniya12@gmail.com |
+| Teena     | Singh      | Seawood | Margao    | Goa         | 2334 |    9284 | rsa2438@gmail.com  |
++-----------+------------+---------+-----------+-------------+------+---------+--------------------+
+3 rows in set (0.00 sec)
+
+mysql> select FirstName from Address_Book_Table where City = 'Mumbai';
++-----------+
+| FirstName |
++-----------+
+| Soniya    |
++-----------+
+1 row in set (0.00 sec)
+
+Retriving FirstName Belonging to State.
+
+mysql> select FirstName from Address_Book_Table where State = 'Goa';
++-----------+
+| FirstName |
++-----------+
+| Teena     |
++-----------+	
+1 row in set (0.00 sec)
+
+**********UC-7 Find the Size of Address Book By City or State**********
+
+mysql> select count(city) from Address_Book_Table;
++-------------+
+| count(city) |
++-------------+
+|           3 |
++-------------+
+1 row in set (0.01 sec)
+
+Size of Address Book by State
+
+mysql> select count(state) from Address_Book_Table;
++--------------+
+| count(state) |
++--------------+
+|            3 |
++--------------+
+
+**********UC-8 Retrieve Entries Sorted Alphabetically By FirstName**********
+
+mysql> select * from Address_Book_Table order by FirstName asc;
++-----------+------------+---------+-----------+-------------+------+---------+--------------------+
+| FirstName | LastName   | Address | City      | State       | Zip  | PhoneNo | Email              |
++-----------+------------+---------+-----------+-------------+------+---------+--------------------+
+| Renuka    | Singhaniya | Hsr     | Bangalore | Karnataka   | 1290 |    3225 | rima15@gmail.com   |
+| Soniya    | Sharma     | Marunji | Mumbai    | KMaharastra | 1490 |    8121 | soniya12@gmail.com |
+| Teena     | Singh      | Seawood | Margao    | Goa         | 2334 |    9284 | rsa2438@gmail.com  |
++-----------+------------+---------+-----------+-------------+------+---------+--------------------+
+3 rows in set (0.00 sec)
+
+Retriving entries sorted in descending order by FirstName.
+
+mysql> select * from Address_Book_Table order by FirstName desc;
++-----------+------------+---------+-----------+-------------+------+---------+--------------------+
+| FirstName | LastName   | Address | City      | State       | Zip  | PhoneNo | Email              |
++-----------+------------+---------+-----------+-------------+------+---------+--------------------+
+| Teena     | Singh      | Seawood | Margao    | Goa         | 2334 |    9284 | rsa2438@gmail.com  |
+| Soniya    | Sharma     | Marunji | Mumbai    | KMaharastra | 1490 |    8121 | soniya12@gmail.com |
+| Renuka    | Singhaniya | Hsr     | Bangalore | Karnataka   | 1290 |    3225 | rima15@gmail.com   |
++-----------+------------+---------+-----------+-------------+------+---------+--------------------+
+3 rows in set (0.00 sec)
+
+**********UC-9 Identfying each address book with name and type**********
+
+mysql> alter table Address_Book_Table add Type varchar(70) not null after Email;
+Query OK, 0 rows affected (0.08 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from Address_Book_Table;
++-----------+------------+------------+-----------+-------------+------+---------+--------------------+------+
+| FirstName | LastName   | Address    | City      | State       | Zip  | PhoneNo | Email              | Type |
++-----------+------------+------------+-----------+-------------+------+---------+--------------------+------+
+| Renuka    | Singhaniya | Hsr        | Bangalore | Karnataka   | 1290 |    3225 | rima15@gmail.com   |      |
+| Soniya    | Sharma     | Marunji    | Mumbai    | KMaharastra | 1490 |    8121 | soniya12@gmail.com |      |
+| Teena     | Singh      | Seawood    | Margao    | Goa         | 2334 |    9284 | rsa2438@gmail.com  |      |
+| Daksha    | Patil      | Majestic   | Bangalore | Karnataka   | 2345 |    9897 | daksha1@gmail.com  |      |
+| Shital    | Biradar    | Vijaynagar | Nasik     | Maharastra  | 2397 |    8789 | shit98@gmail.com   |      |
++-----------+------------+------------+-----------+-------------+------+---------+--------------------+------+
+5 rows in set (0.00 sec)
+
+mysql> update Address_Book_Table set Type = 'Family' where FirstName = 'Renuka' or FirstName = 'Shital';
+Query OK, 2 rows affected (0.01 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+mysql> update Address_Book_Table set Type = 'Friend' where FirstName = 'Teena' or FirstName = 'Daksha';
+Query OK, 2 rows affected (0.01 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+mysql> update Address_Book_Table set Type = 'Profession' where FirstName = 'Soniya';
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from Address_Book_Table;
++-----------+------------+------------+-----------+-------------+------+---------+--------------------+------------+
+| FirstName | LastName   | Address    | City      | State       | Zip  | PhoneNo | Email              | Type       |
++-----------+------------+------------+-----------+-------------+------+---------+--------------------+------------+
+| Renuka    | Singhaniya | Hsr        | Bangalore | Karnataka   | 1290 |    3225 | rima15@gmail.com   | Family     |
+| Soniya    | Sharma     | Marunji    | Mumbai    | KMaharastra | 1490 |    8121 | soniya12@gmail.com | Profession |
+| Teena     | Singh      | Seawood    | Margao    | Goa         | 2334 |    9284 | rsa2438@gmail.com  | Friend     |
+| Daksha    | Patil      | Majestic   | Bangalore | Karnataka   | 2345 |    9897 | daksha1@gmail.com  | Friend     |
+| Shital    | Biradar    | Vijaynagar | Nasik     | Maharastra  | 2397 |    8789 | shit98@gmail.com   | Family     |
++-----------+------------+------------+-----------+-------------+------+---------+--------------------+------------+
+5 rows in set (0.00 sec)
+
+mysql> alter table Address_Book_Table add AddressBook varchar(70) not null after Type;
+Query OK, 0 rows affected (0.07 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from Address_Book_Table;
++-----------+------------+------------+-----------+-------------+------+---------+--------------------+------------+-------------+
+| FirstName | LastName   | Address    | City      | State       | Zip  | PhoneNo | Email              | Type       | AddressBook |
++-----------+------------+------------+-----------+-------------+------+---------+--------------------+------------+-------------+
+| Renuka    | Singhaniya | Hsr        | Bangalore | Karnataka   | 1290 |    3225 | rima15@gmail.com   | Family     |             |
+| Soniya    | Sharma     | Marunji    | Mumbai    | KMaharastra | 1490 |    8121 | soniya12@gmail.com | Profession |             |
+| Teena     | Singh      | Seawood    | Margao    | Goa         | 2334 |    9284 | rsa2438@gmail.com  | Friend     |             |
+| Daksha    | Patil      | Majestic   | Bangalore | Karnataka   | 2345 |    9897 | daksha1@gmail.com  | Friend     |             |
+| Shital    | Biradar    | Vijaynagar | Nasik     | Maharastra  | 2397 |    8789 | shit98@gmail.com   | Family     |             |
++-----------+------------+------------+-----------+-------------+------+---------+--------------------+------------+-------------+
+5 rows in set (0.00 sec)
+
+mysql> update Address_Book_Table set AddressBook = 'Address1' where FirstName = 'Renuka';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update Address_Book_Table set AddressBook = 'Address2' where FirstName = 'Soniya';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update Address_Book_Table set AddressBook = 'Address3' where FirstName = 'Teena';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update Address_Book_Table set AddressBook = 'Address4' where FirstName = 'Daksha';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update Address_Book_Table set AddressBook = 'Address5' where FirstName = 'Shital';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from Address_Book_Table;
++-----------+------------+------------+-----------+-------------+------+---------+--------------------+------------+-------------+
+| FirstName | LastName   | Address    | City      | State       | Zip  | PhoneNo | Email              | Type       | AddressBook |
++-----------+------------+------------+-----------+-------------+------+---------+--------------------+------------+-------------+
+| Renuka    | Singhaniya | Hsr        | Bangalore | Karnataka   | 1290 |    3225 | rima15@gmail.com   | Family     | Address1    |
+| Soniya    | Sharma     | Marunji    | Mumbai    | KMaharastra | 1490 |    8121 | soniya12@gmail.com | Profession | Address2    |
+| Teena     | Singh      | Seawood    | Margao    | Goa         | 2334 |    9284 | rsa2438@gmail.com  | Friend     | Address3    |
+| Daksha    | Patil      | Majestic   | Bangalore | Karnataka   | 2345 |    9897 | daksha1@gmail.com  | Friend     | Address4    |
+| Shital    | Biradar    | Vijaynagar | Nasik     | Maharastra  | 2397 |    8789 | shit98@gmail.com   | Family     | Address5    |
++-----------+------------+------------+-----------+-------------+------+---------+--------------------+------------+-------------+
+5 rows in set (0.00 sec)
+
+**********UC-10 Get number of contact person count by type**********
+
+mysql> Select Type, count(FirstName) from Address_Book_Table group by Type;
++------------+------------------+
+| Type       | count(FirstName) |
++------------+------------------+
+| Family     |                2 |
+| Profession |                1 |
+| Friend     |                2 |
++------------+------------------+
+3 rows in set (0.00 sec)
