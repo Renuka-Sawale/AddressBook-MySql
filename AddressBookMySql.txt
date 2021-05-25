@@ -1,19 +1,18 @@
-**********UC-3 Inserting contacts in address book table **********
+**********UC-4 Edit Existing contacts by using FirstName**********
 
-mysql> insert into Address_Book_Table (FirstName, LastName, Address, City, State, Zip, PhoneNo, Email) values
-    -> ( 'Renuka', 'Sawale', 'Pimpri', 'Pune', 'Maharastra', 1234, 9123, 'ren11@gmail.com' ),
-    -> ( 'Reetu', 'Roy', 'Chinchawad', 'Delhi', 'Kerala', 5678, 9112, 'reetu14@gmail.com' ),
-    -> ( 'Soniya', 'Sharma', 'Marunji', 'Mumbai', 'KMaharastra', 1490, 8121, 'soniya12@gmail.com' ),
-    -> ( 'Teena', 'Singh', 'Seawood', 'Margao', 'Goa', 2334, 9284, 'rsa2438@gmail.com' );
-Query OK, 4 rows affected (0.01 sec)
+mysql> update Address_Book_Table
+    -> set LastName = 'Singhaniya', Address = 'Hsr', City = 'Bangalore', State = 'Karnataka', Zip = 1290, PhoneNo = 3225, Email = 'rima15@gmail.com'
+    -> where FirstName = 'Renuka';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
 
 mysql> select * from Address_Book_Table;
-+-----------+----------+------------+--------+-------------+------+---------+--------------------+
-| FirstName | LastName | Address    | City   | State       | Zip  | PhoneNo | Email              |
-+-----------+----------+------------+--------+-------------+------+---------+--------------------+
-| Renuka    | Sawale   | Pimpri     | Pune   | Maharastra  | 1234 |    9123 | ren11@gmail.com    |
-| Reetu     | Roy      | Chinchawad | Delhi  | Kerala      | 5678 |    9112 | reetu14@gmail.com  |
-| Soniya    | Sharma   | Marunji    | Mumbai | KMaharastra | 1490 |    8121 | soniya12@gmail.com |
-| Teena     | Singh    | Seawood    | Margao | Goa         | 2334 |    9284 | rsa2438@gmail.com  |
-+-----------+----------+------------+--------+-------------+------+---------+--------------------+
++-----------+------------+------------+-----------+-------------+------+---------+--------------------+
+| FirstName | LastName   | Address    | City      | State       | Zip  | PhoneNo | Email              |
++-----------+------------+------------+-----------+-------------+------+---------+--------------------+
+| Renuka    | Singhaniya | Hsr        | Bangalore | Karnataka   | 1290 |    3225 | rima15@gmail.com   |
+| Reetu     | Roy        | Chinchawad | Delhi     | Kerala      | 5678 |    9112 | reetu14@gmail.com  |
+| Soniya    | Sharma     | Marunji    | Mumbai    | KMaharastra | 1490 |    8121 | soniya12@gmail.com |
+| Teena     | Singh      | Seawood    | Margao    | Goa         | 2334 |    9284 | rsa2438@gmail.com  |
++-----------+------------+------------+-----------+-------------+------+---------+--------------------+
 4 rows in set (0.00 sec)
