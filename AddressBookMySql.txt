@@ -1,3 +1,4 @@
+
 **********Uc-1 Create Address Book Database ***********
 
 mysql> create database Address_Book_Service;
@@ -272,3 +273,206 @@ mysql> Select Type, count(FirstName) from Address_Book_Table group by Type;
 | Friend     |                2 |
 +------------+------------------+
 3 rows in set (0.00 sec)
+
+**********UC-11 Adding Person to both Friend and Family **********
+
+mysql> insert into address_book_table (firstname, lastname, address, city, state, zip, phoneno, email, type, addressbook) values
+    -> ( 'Tanamay', 'Gupta', 'Silkboard', 'Aurad', 'Tamilnadu', 9893, 8156, 'gupta15@gmail.com', 'family', 'Address6');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into address_book_table (firstname, lastname, address, city, state, zip, phoneno, email, type, addressbook) values
+    -> ( 'Prem', 'Kashyap', 'Hsr layout', 'Amaravati', 'Andhra', '7893', '9856', 'gul15@gmail.com', 'friend', 'Address7');
+Query OK, 1 row affected (0.04 sec)
+
+mysql> select * from address_book_table;
++-----------+------------+------------+-----------+-------------+------+---------+--------------------+------------+-------------+
+| FirstName | LastName   | Address    | City      | State       | Zip  | PhoneNo | Email              | Type       | AddressBook |
++-----------+------------+------------+-----------+-------------+------+---------+--------------------+------------+-------------+
+| Renuka    | Singhaniya | Hsr        | Bangalore | Karnataka   | 1290 |    3225 | rima15@gmail.com   | Family     | Address1    |
+| Soniya    | Sharma     | Marunji    | Mumbai    | KMaharastra | 1490 |    8121 | soniya12@gmail.com | Profession | Address2    |
+| Teena     | Singh      | Seawood    | Margao    | Goa         | 2334 |    9284 | rsa2438@gmail.com  | Friend     | Address3    |
+| Daksha    | Patil      | Majestic   | Bangalore | Karnataka   | 2345 |    9897 | daksha1@gmail.com  | Friend     | Address4    |
+| Shital    | Biradar    | Vijaynagar | Nasik     | Maharastra  | 2397 |    8789 | shit98@gmail.com   | Family     | Address5    |
+| Tanamay   | Gupta      | Silkboard  | Aurad     | Tamilnadu   | 9893 |    8156 | gupta15@gmail.com  | family     | Address6    |
+| Tanamay   | Gupta      | Silkboard  | Aurad     | Tamilnadu   | 9893 |    8156 | gupta15@gmail.com  | family     | Address6    |
+| Prem      | Kashyap    | Hsr layout | Amaravati | Andhra      | 7893 |    9856 | gul15@gmail.com    | friend     | Address7    |
++-----------+------------+------------+-----------+-------------+------+---------+--------------------+------------+-------------+
+8 rows in set (0.76 sec)
+
+**********UC-12& 13 **********
+
+mysql> create table person_detail
+    -> (
+    -> id int primary key not null,
+    -> firstname varchar(150) not null,
+    -> lastname varchar(150) not null,
+    -> phoneNo int not null,
+    -> email varchar(150) not null
+    -> );
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> insert into person_detail(id, firstname, lastname, phoneNo, email) values
+    -> (1, 'Teju', 'Kashap', 9028, 'tej12@gmail.com'),
+    -> (2, 'Tanamay', 'Gupta', 9928, 'tanu18@gmail.com'),
+    -> (3, 'Yashu', 'Biradar', 9858, 'yashu17@gmail.com'),
+    -> (4, 'Ganesh', 'Patil', 9123, 'ganesh12@gmail.com');
+Query OK, 4 rows affected (0.02 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> select * from person_detail;
++----+-----------+----------+---------+--------------------+
+| id | firstname | lastname | phoneNo | email              |
++----+-----------+----------+---------+--------------------+
+|  1 | Teju      | Kashap   |    9028 | tej12@gmail.com    |
+|  2 | Tanamay   | Gupta    |    9928 | tanu18@gmail.com   |
+|  3 | Yashu     | Biradar  |    9858 | yashu17@gmail.com  |
+|  4 | Ganesh    | Patil    |    9123 | ganesh12@gmail.com |
++----+-----------+----------+---------+--------------------+
+4 rows in set (0.00 sec)
+
+mysql> create table address_detail
+    -> (
+    -> address varchar(250) not null,
+    -> city varchar(250) not null,
+    -> state varchar(150) not null,
+    -> zip int not null,
+    -> id int,
+    -> foreign key(id) references person_detail(id)
+    -> );
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> insert into address_detail(address, city, state, zip, id) values
+    -> ('Kengeri', 'Bangalore', 'Karnataka', 5603, 1),
+    -> ('Pimpri', 'Pune', 'Maharastra', 5627, 2),
+    -> ('Seawood', 'Mumbai', 'Mahrastra', 5431, 3),
+    -> ('Yashwantpur', 'Bangalore', 'Karnataka', 5604, 4);
+Query OK, 4 rows affected (0.01 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> select * from person_detail;
++----+-----------+----------+---------+--------------------+
+| id | firstname | lastname | phoneNo | email              |
++----+-----------+----------+---------+--------------------+
+|  1 | Teju      | Kashap   |    9028 | tej12@gmail.com    |
+|  2 | Tanamay   | Gupta    |    9928 | tanu18@gmail.com   |
+|  3 | Yashu     | Biradar  |    9858 | yashu17@gmail.com  |
+|  4 | Ganesh    | Patil    |    9123 | ganesh12@gmail.com |
++----+-----------+----------+---------+--------------------+
+4 rows in set (0.00 sec)
+
+mysql> select * from address_detail;
++-------------+-----------+------------+------+------+
+| address     | city      | state      | zip  | id   |
++-------------+-----------+------------+------+------+
+| Kengeri     | Bangalore | Karnataka  | 5603 |    1 |
+| Pimpri      | Pune      | Maharastra | 5627 |    2 |
+| Seawood     | Mumbai    | Mahrastra  | 5431 |    3 |
+| Yashwantpur | Bangalore | Karnataka  | 5604 |    4 |
++-------------+-----------+------------+------+------+
+4 rows in set (0.00 sec)
+
+mysql> create table person_address
+    -> (
+    -> id int not null,
+    -> name varchar(100) not null,
+    -> type varchar(100) not null,
+    -> foreign key(id) references person_detail(id)
+    -> );
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> insert into person_address(id, name, type) values
+    -> (4, 'book1', 'family'),
+    -> (3, 'book3', 'friend'),
+    -> (2, 'book2', 'friend'),
+    -> (1, 'book4', 'profession');
+Query OK, 4 rows affected (0.02 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> select * from person_detail;
++----+-----------+----------+---------+--------------------+
+| id | firstname | lastname | phoneNo | email              |
++----+-----------+----------+---------+--------------------+
+|  1 | Teju      | Kashap   |    9028 | tej12@gmail.com    |
+|  2 | Tanamay   | Gupta    |    9928 | tanu18@gmail.com   |
+|  3 | Yashu     | Biradar  |    9858 | yashu17@gmail.com  |
+|  4 | Ganesh    | Patil    |    9123 | ganesh12@gmail.com |
++----+-----------+----------+---------+--------------------+
+4 rows in set (0.01 sec)
+
+mysql> select * from address_detail;
++-------------+-----------+------------+------+------+
+| address     | city      | state      | zip  | id   |
++-------------+-----------+------------+------+------+
+| Kengeri     | Bangalore | Karnataka  | 5603 |    1 |
+| Pimpri      | Pune      | Maharastra | 5627 |    2 |
+| Seawood     | Mumbai    | Mahrastra  | 5431 |    3 |
+| Yashwantpur | Bangalore | Karnataka  | 5604 |    4 |
++-------------+-----------+------------+------+------+
+4 rows in set (0.00 sec)
+
+mysql> select * from person_address;
++----+-------+------------+
+| id | name  | type       |
++----+-------+------------+
+|  4 | book1 | family     |
+|  3 | book3 | friend     |
+|  2 | book2 | friend     |
+|  1 | book4 | profession |
++----+-------+------------+
+4 rows in set (0.00 sec)
+
+##### Refactored UC-6 #####
+
+mysql> select firstname, city
+    -> from address_detail inner join person_detail
+    -> on address_detail.id = person_detail.id
+    -> where city = 'Pune'
+    -> ;
++-----------+------+
+| firstname | city |
++-----------+------+
+| Tanamay   | Pune |
++-----------+------+
+1 row in set (0.00 sec)
+
+##### Refactored UC-7 #####
+
+mysql> select count(state),state
+    -> from address_detail inner join person_detail
+    -> on person_detail.id = address_detail.id
+    -> where state = 'Karnataka'
+    -> group by state;
++--------------+-----------+
+| count(state) | state     |
++--------------+-----------+
+|            2 | Karnataka |
++--------------+-----------+
+1 row in set (0.01 sec)
+ 
+##### Refactored UC-8 #####
+
+mysql> select * from person_detail inner join address_detail
+    -> on address_detail.id = person_detail.id
+    -> where city = 'Bangalore'
+    -> order by firstname asc;
++----+-----------+----------+---------+--------------------+-------------+-----------+-----------+------+------+
+| id | firstname | lastname | phoneNo | email              | address     | city      | state     | zip  | id   |
++----+-----------+----------+---------+--------------------+-------------+-----------+-----------+------+------+
+|  4 | Ganesh    | Patil    |    9123 | ganesh12@gmail.com | Yashwantpur | Bangalore | Karnataka | 5604 |    4 |
+|  1 | Teju      | Kashap   |    9028 | tej12@gmail.com    | Kengeri     | Bangalore | Karnataka | 5603 |    1 |
++----+-----------+----------+---------+--------------------+-------------+-----------+-----------+------+------+
+2 rows in set (0.01 sec)
+
+##### Refactored UC-10 #####
+
+mysql> select type, count(firstname)
+    -> from person_address inner join person_detail
+    -> on person_address.id = person_detail.id
+    -> where type = 'family'
+    -> group by type;
++--------+------------------+
+| type   | count(firstname) |
++--------+------------------+
+| family |                1 |
++--------+------------------+
+1 row in set (0.00 sec)
